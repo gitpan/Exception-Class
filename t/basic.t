@@ -2,7 +2,7 @@ use strict;
 
 use File::Spec;
 
-use Test::More tests => 47;
+use Test::More tests => 52;
 
 use_ok('Exception::Class');
 
@@ -35,7 +35,7 @@ use Exception::Class
     'FooBarException' => { isa => 'FooException' },
 
     'FieldsException' => { isa => 'YAE', fields => [ qw( foo bar ) ] },
-    'MoreFieldsException' => { isa => 'FieldsException', fields => [qw(yip)]},
+    'MoreFieldsException' => { isa => 'FieldsException', fields => [ 'yip' ] },
 
     'Exc::AsString',
 
@@ -43,6 +43,10 @@ use Exception::Class
 
     'ObjectRefs',
     'ObjectRefs2',
+
+    'SubAndFields' => { fields => 'thing',
+                        alias  => 'throw_saf',
+                      },
   );
 
 
@@ -75,8 +79,8 @@ $^W = 1;
     is( $@->file, $expect,
         "File should be '$expect'" );
 
-    is( $@->line, 58,
-        "Line should be 58" );
+    is( $@->line, 62,
+        "Line should be 62" );
 
     is( $@->pid, $$,
         "PID should be $$" );
@@ -248,7 +252,6 @@ sub Exc::AsString::as_string { return uc $_[0]->error }
 
     is( $@->yip, 10,
         "Exception's foo method should return 10" );
-
 }
 
 sub FieldsException::full_message
@@ -309,6 +312,22 @@ sub FieldsException::full_message
 
     ok( ! ref $args[0],
         "No references should be saved in the stack trace" );
+}
+
+# 47-52 - aliases
+{
+    eval { throw_saf 'an error' };
+    my $e = $@;
+
+    ok( $e, "Throw exception via convenience sub (one param)" );
+    is( $e->error, 'an error' );
+
+    eval { throw_saf error => 'another error', thing => 10 };
+    my $e = $@;
+
+    ok( $e, "Throw exception via convenience sub (named params)" );
+    is( $e->error, 'another error' );
+    is( $e->thing, 10 );
 }
 
 sub argh
