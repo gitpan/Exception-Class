@@ -1,12 +1,12 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         Exception-Class
-version:      1.18
+version:      1.19
 version_from: lib/Exception/Class.pm
 installdirs:  site
 requires:
     Class::Data::Inheritable:      0.02
-    Devel::StackTrace:             1.07
+    Devel::StackTrace:             1.1
     Test::More:                    0.46
 
 distribution_type: module
