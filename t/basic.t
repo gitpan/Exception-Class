@@ -28,7 +28,7 @@ use Exception::Class
   (  'YAE' => { isa => 'SubTestException', alias => 'yae' },
 
     'SubTestException' => { isa => 'TestException',
-                            description => 'blah blah' },
+                            description => q|blah'\\blah| },
 
     'TestException',
 
@@ -118,8 +118,8 @@ $^W = 1;
 
     isa_ok( $@, 'Exception::Class::Base' );
 
-    is( $@->description, 'blah blah',
-        "Description should be 'blah blah'" );
+    is( $@->description, q|blah'\\blah|,
+        q|Description should be "blah'\\blah"| );
 
     eval { YAE->throw( error => 'err' ); };
 
@@ -175,19 +175,16 @@ $^W = 1;
     Exception::Class::Base->Trace(1);
     eval { Exception::Class::Base->throw( error => 'overloaded again' ); };
 
-    my $re;
-    if ($] == 5.006)
+ SKIP:
     {
-	$re = qr/overloaded again.+eval {...}\((?:'Exception::Class::Base', )?'error', 'overloaded again'\)/s;
-    }
-    else
-    {
-	$re = qr/overloaded again.+eval {...}\('Exception::Class::Base', 'error', 'overloaded again'\)/s
-    }
+        skip( "Perl 5.6.0 is broken.  See README.", 1 ) if $] == 5.006;
 
-    my $x = "$@";
-    like( $x, $re,
-          "Overloaded stringification should include a stack trace" );
+        my $re = qr/overloaded again.+eval {...}\('Exception::Class::Base', 'error', 'overloaded again'\)/s;
+
+        my $x = "$@";
+        like( $x, $re,
+              "Overloaded stringification should include a stack trace" );
+    }
 }
 
 # 32-33 - Test using message as hash key to constructor

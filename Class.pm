@@ -7,7 +7,7 @@ use vars qw($VERSION $BASE_EXC_CLASS %CLASSES);
 
 BEGIN { $BASE_EXC_CLASS ||= 'Exception::Class::Base'; }
 
-$VERSION = '1.10';
+$VERSION = '1.11';
 
 sub import
 {
@@ -120,11 +120,11 @@ EOPERL
 
     if ($def->{description})
     {
-	(my $desc = $def->{description}) =~ s/[\\\']/\\$1/g;
+	(my $desc = $def->{description}) =~ s/([\\\'])/\\$1/g;
 	$code .= <<"EOPERL";
 sub description
 {
-    return '$def->{description}';
+    return '$desc';
 }
 EOPERL
     }
