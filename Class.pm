@@ -7,7 +7,7 @@ use vars qw($VERSION $BASE_EXC_CLASS %CLASSES);
 
 BEGIN { $BASE_EXC_CLASS ||= 'Exception::Class::Base'; }
 
-$VERSION = '0.8';
+$VERSION = '0.90';
 
 sub import
 {
@@ -108,7 +108,7 @@ use vars qw(\$VERSION \$DO_TRACE);
 
 use base qw($isa);
 
-\$VERSION = '1.0';
+\$VERSION = '1.1';
 
 \$DO_TRACE = 0;
 
@@ -138,7 +138,7 @@ package Exception::Class::Base;
 
 use Devel::StackTrace;
 
-use fields qw( error pid uid euid gid egid time trace package file line );
+use fields qw( message pid uid euid gid egid time trace package file line );
 
 use overload
     '""' => \&as_string,
@@ -146,7 +146,7 @@ use overload
 
 use vars qw($VERSION $DO_TRACE);
 
-$VERSION = '1.0';
+$VERSION = '1.1';
 
 $DO_TRACE = 0;
 
@@ -158,6 +158,7 @@ BEGIN
     {
 	*{$f} = sub { my $s = shift; return $s->{$f}; };
     }
+    *{'error'} = \&message;
 }
 
 1;
@@ -165,9 +166,10 @@ BEGIN
 sub throw
 {
     my $proto = shift;
-    my $class = ref $proto || $proto;
 
-    die $class->new(@_);
+    $proto->rethrow if ref $proto;
+
+    die $proto->new(@_);
 }
 
 sub rethrow
@@ -195,7 +197,7 @@ sub _initialize
     my %p = @_;
 
     # Try to get something useful in there (I hope).  Or just give up.
-    $self->{error} = $p{error} || $! || '';
+    $self->{message} = $p{message} || $p{error} || $! || '';
 
     $self->{time} = CORE::time; # without CORE:: sometimes makes a warning (why?)
     $self->{pid}  = $$;
@@ -206,7 +208,8 @@ sub _initialize
 
     my $x = 0;
     # move back the stack til we're out of this package
-    $x++ while (caller($x))->isa(__PACKAGE__);
+    $x++ while UNIVERSAL::isa( scalar caller($x), __PACKAGE__ );
+    $x-- until caller($x);
 
     @{ $self }{ qw( package file line ) } = (caller($x))[0..2];
 
@@ -241,7 +244,7 @@ sub as_string
 {
     my $self = shift;
 
-    my $str = $self->{error};
+    my $str = $self->{message};
     if ($self->trace)
     {
 	$str .= "\n\n" . $self->trace->as_string;
@@ -377,16 +380,16 @@ to not make a trace.  Calling this method with a value changes this
 behavior.  It always returns the current value (after any change is
 applied).
 
-=item * throw( error => $error_message )
+=item * throw( message => $message ) OR throw ( error => $error )
 
 This method creates a new Exception::Class::Base object with the given
 error message.  If no error message is given, $! is used.  It then
 die's with this object as its argument.
 
-=item * new( error => $error_message )
+=item * new( message => $message ) OR new ( error => $error )
 
 Returns a new Exception::Class::Base object with the given error
-message.  If no error message is given, $! is used.
+message.  If no message is given, $! is used instead.
 
 =item * description
 
@@ -408,9 +411,15 @@ However, it will cause C<caller> to report the die as coming from
 within the Exception::Class::Base class rather than where rethrow was
 called.
 
+=item * message
+
+Returns the message associated with the exception.  This is synonymous
+with the C<error> method.
+
 =item * error
 
-Returns the error message associated with the exception.
+Returns the error message associated with the exception.  This is
+synonymous with the C<message> method.
 
 =item * pid
 
@@ -488,6 +497,18 @@ of 10-20 different files).  It's also ever so slightly faster as the
 Class::Exception->import method doesn't get called over and over again
 (though a given class is only ever made once).
 
+This might look something like this:
+
+  package Foo::Bar::Exceptions;
+
+  use Exception::Class ( Foo::Bar::Exception::Smell =>
+                         { description => 'stinky!' },
+
+                         Foo::Bar::Exception::Taste =>
+                         { description => 'like, gag me with a spoon!' },
+
+                         ... );
+
 You may want to create a real module to subclass
 Exception::Class::Base as well, particularly if you want your
 exceptions to have more methods.  Read the L<DECLARING EXCEPTION
@@ -498,11 +519,14 @@ CLASSES> for more details.
 If you are interested in adding try/catch/finally syntactic sugar to
 your code then I recommend you check out Graham Barr's Error module,
 which implements this syntax.  It also includes its own base exception
-class, Error::Simple, but you should be able to use
-Exception::Class::Base along with his try/catch routines
-transparently.  If you encounter any issues in getting these two to
-work together, please let me know (and maybe Graham as well) and I
-will fix this.
+class, Error::Simple.
+
+If you would prefer to use the Exception::Class::Base included with
+this module, you'll have to add this to your code somewhere:
+
+  push @Exception::Class::Base::ISA, 'Error';
+
+It's a hack but apparently it works.
 
 =head1 AUTHOR
 
