@@ -7,7 +7,7 @@ use vars qw($VERSION $BASE_EXC_CLASS %CLASSES);
 
 BEGIN { $BASE_EXC_CLASS ||= 'Exception::Class::Base'; }
 
-$VERSION = '0.97';
+$VERSION = '0.98';
 
 sub import
 {
@@ -144,7 +144,7 @@ __PACKAGE__->mk_classdata('Trace');
 *do_trace = \&Trace;
 
 use overload
-    '""' => \&as_string,
+    '""' => sub { $_[0]->as_string },
     fallback => 1;
 
 use vars qw($VERSION);
