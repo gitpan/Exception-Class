@@ -7,11 +7,13 @@ use vars qw($VERSION $BASE_EXC_CLASS %CLASSES);
 
 BEGIN { $BASE_EXC_CLASS ||= 'Exception::Class::Base'; }
 
-$VERSION = '1.09';
+$VERSION = '1.10';
 
 sub import
 {
     my $class = shift;
+
+    local $Exception::Class::Caller = caller();
 
     my %needs_parent;
  MAKE_CLASSES:
@@ -38,7 +40,6 @@ sub import
 
 	$class->_make_subclass( subclass => $subclass,
 				def => $def || {},
-                                caller => scalar caller(),
                               );
     }
 
@@ -145,8 +146,11 @@ EOPERL
 
     if ( my $alias = $def->{alias} )
     {
+        die "Cannot make alias without caller"
+            unless defined $Exception::Class::Caller;
+
         no strict 'refs';
-        *{"${p{caller}}::$alias"} = sub { $subclass->throw(@_) };
+        *{"$Exception::Class::Caller\::$alias"} = sub { $subclass->throw(@_) };
     }
 
     eval $code;

@@ -25,7 +25,7 @@ BEGIN
 }
 
 use Exception::Class
-  ( 'YAE' => { isa => 'SubTestException' },
+  (  'YAE' => { isa => 'SubTestException', alias => 'yae' },
 
     'SubTestException' => { isa => 'TestException',
                             description => 'blah blah' },
@@ -320,14 +320,14 @@ sub FieldsException::full_message
     my $e = $@;
 
     ok( $e, "Throw exception via convenience sub (one param)" );
-    is( $e->error, 'an error' );
+    is( $e->error, 'an error', 'check error message' );
 
     eval { throw_saf error => 'another error', thing => 10 };
-    my $e = $@;
+    $e = $@;
 
     ok( $e, "Throw exception via convenience sub (named params)" );
-    is( $e->error, 'another error' );
-    is( $e->thing, 10 );
+    is( $e->error, 'another error', 'check error message' );
+    is( $e->thing, 10, 'check "thing" field' );
 }
 
 sub argh
