@@ -1,9 +1,9 @@
 use ExtUtils::MakeMaker;
 
 WriteMakefile( NAME         => 'Exception::Class',
-               VERSION_FROM => 'Class.pm',
+               VERSION_FROM => 'lib/Exception/Class.pm',
                PREREQ_PM    => { 'Class::Data::Inheritable' => 0.02,
-                                 'Devel::StackTrace' => 1.03,
+                                 'Devel::StackTrace' => 1.04,
                                  'Test::More' => 0.46,
                                }
 	     );

@@ -1,12 +1,13 @@
+# http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         Exception-Class
-version:      1.14
-version_from: Class.pm
+version:      1.16
+version_from: lib/Exception/Class.pm
 installdirs:  site
 requires:
-    Test::More:                    0.46
-    Devel::StackTrace:             1.03
     Class::Data::Inheritable:      0.02
+    Devel::StackTrace:             1.04
+    Test::More:                    0.46
 
 distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.10_06
+generated_by: ExtUtils::MakeMaker version 6.17
