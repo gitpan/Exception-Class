@@ -1,13 +1,20 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         Exception-Class
-version:      1.19
-version_from: lib/Exception/Class.pm
-installdirs:  site
+--- #YAML:1.0
+name: Exception-Class
+version: 1.20
+author:
+  - Dave Rolsky, <autarch@urth.org>
+abstract: |-
+  A module that allows you to declare real exception classes in Perl
+license: perl
 requires:
-    Class::Data::Inheritable:      0.02
-    Devel::StackTrace:             1.1
-    Test::More:                    0.46
-
-distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.21
+  Class::Data::Inheritable: 0.02
+  Devel::StackTrace: 1.1
+  Test::More: 0.46
+provides:
+  Exception::Class:
+    file: lib/Exception/Class.pm
+    version: 1.20
+  Exception::Class::Base:
+    file: lib/Exception/Class.pm
+    version: 1.20
+generated_by: Module::Build version 0.2607

@@ -1,3 +1,18 @@
+1.20 Jan 1, 2005
+
+- Moved the Classes() method to Exception::Class, now as a function,
+which is where it really belongs.  Also corrected the docs for this
+function, as they incorrectly implied that it would return all
+subclasses, instead of just subclasses which were created when loading
+Exception::Class.
+
+- Added a Build.PL file, and releases are now signed with
+Module::Signature.
+
+- Added ignore_class and ignore_package constructor parameters.  Patch
+by Daisuke Maki.
+
+
 1.19 Mar 10, 2004
 
 - Identical to 1.18 except that it requires Devel::StackTrace 1.10,
