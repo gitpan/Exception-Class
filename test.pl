@@ -78,10 +78,10 @@ result( $main::loaded, "Unable to load Exception::Class module\n" );
 	    "SubTestException was thrown in class ", ref $@, "\n" );
 
     result( $@->isa( 'TestException' ),
-	    "SubTestException should be a subclass of TestException\n" );
+	    "SubTestException should be a subclass of TestException (triggers ->isa bug.  See README.)\n" );
 
     result( $@->isa( 'Exception::Class::Base' ),
-	    "SubTestException should be a subclass of Exception::Class::Base\n" );
+	    "SubTestException should be a subclass of Exception::Class::Base (triggers ->isa bug.  See README.)\n" );
 
     result( $@->description eq 'blah blah',
 	    "Description should be 'blah blah' but it's '", $@->description, "'\n" );
@@ -89,11 +89,11 @@ result( $main::loaded, "Unable to load Exception::Class module\n" );
     eval { YAE->throw( error => 'err' ); };
 
     result( $@->isa( 'SubTestException' ),
-	    "YAE should be a subclass of SubTestException\n" );
+	    "YAE should be a subclass of SubTestException (triggers ->isa bug.  See README.)\n" );
 
     eval { BlahBlah->throw( error => 'yadda yadda' ); };
     result( $@->isa('FooException'),
-	    "The BlahBlah class should be a subclass of FooException\n" );
+	    "BlahBlah should be a subclass of FooException\n" );
     result( $@->isa('Exception::Class::Base'),
 	    "The BlahBlah class should be a subclass of Exception::Class::Base\n" );
 }
@@ -130,7 +130,18 @@ result( $main::loaded, "Unable to load Exception::Class module\n" );
 
     Exception::Class::Base->do_trace(1);
     eval { Exception::Class::Base->throw( error => 'overloaded again' ); };
-    my $x = "$@" =~ /overloaded again.+eval {...}\('Exception::Class::Base', 'error', 'overloaded again'\)/s;
+
+    my $re;
+    if ($] == 5.006)
+    {
+	$re = qr/overloaded again.+eval {...}\('error', 'overloaded again'\)/s;
+    }
+    else
+    {
+	$re = qr/overloaded again.+eval {...}\('Exception::Class::Base', 'error', 'overloaded again'\)/s
+    }
+
+    my $x = "$@" =~ /$re/;
     result( $x, "Overloaded stringification did not include the expected stack trace\n" );
 }
 
