@@ -6,11 +6,12 @@ WriteMakefile
           'VERSION_FROM' => 'lib/Exception/Class.pm',
           'PREREQ_PM' => {
                            'Class::Data::Inheritable' => '0.02',
-                           'Devel::StackTrace' => '1.1',
+                           'Devel::StackTrace' => '1.12',
                            'Scalar::Util' => '0',
                            'Test::More' => '0.46'
                          },
           'INSTALLDIRS' => 'site',
+          'EXE_FILES' => [],
           'PL_FILES' => {}
         )
 ;
