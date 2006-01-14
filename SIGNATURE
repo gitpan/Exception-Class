@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.44.
+signed via the Module::Signature module, version 0.50.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -15,21 +15,20 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 449de411e61cea559ab012f090f21016f576a4fb Build.PL
-SHA1 19b90e9869c5643768c02483d9a9279a95e7ee85 Changes
+SHA1 7197e852f848fe2df11260feb4f991736ae2605b Changes
 SHA1 0c945b81892562a2f056405f3fe5442bea0ba406 LICENSE
-SHA1 a34b3a8a5c16c9b60c3faa4e7b1be5729de2e8ee MANIFEST
-SHA1 11a8d9795eaf3bdd4d8d23408cfd871d65e895fc META.yml
+SHA1 0b236c2cb79401e20af2119fc2855ef51aec81fb MANIFEST
+SHA1 bc58793da43d51ea5e5426e51a1af7bddfff9a71 META.yml
 SHA1 2f975b624b3d267d7b6b25a500f3032ea8749509 Makefile.PL
 SHA1 4a0a99a8c3a3a0356d88759c7bfdf519ca97cafb README
-SHA1 d52aa6febd9ae0cae6e7039e4dca963bbb330b28 lib/Exception/Class.pm
-SHA1 399d9a11e60a39af9da8044c4895445ba845a0ee t/99-pod.t
+SHA1 81195085133038a51c3c118d7118469354bd3bbb lib/Exception/Class.pm
 SHA1 2db7f15cfaccc2fc49bbd46cae309bbc7f60f409 t/basic.t
-SHA1 841751b21fcaf0e22061f29f4f650dc54249cbe1 t/caught.t
+SHA1 58af03881eb473337b01aa4f07469e86d2090d8d t/caught.t
 SHA1 d6e425dcfb12707a1a33c0592641dbf5dd558370 t/ignore.t
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.2 (GNU/Linux)
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-iD8DBQFDPNId3Or3ZzQuifMRAmyzAJ0YzOlh6YkyCyaBhlnr/E2obblq+gCdFxPI
-jjeiHBe7w5Nc+Tn/D7YWby8=
-=DlI0
+iD8DBQFDyUC43Or3ZzQuifMRAsOVAKDm9ibG22hbELj1GAEcvAn9krdszwCfQwbP
+yXYTeS+ULC14CiIHU/FlVJI=
+=B/rD
 -----END PGP SIGNATURE-----

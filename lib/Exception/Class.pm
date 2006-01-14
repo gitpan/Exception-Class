@@ -10,7 +10,7 @@ use Scalar::Util qw(blessed);
 
 BEGIN { $BASE_EXC_CLASS ||= 'Exception::Class::Base'; }
 
-$VERSION = '1.22';
+$VERSION = '1.23';
 
 sub import
 {
@@ -23,8 +23,8 @@ sub import
     my %needs_parent;
     while (my $subclass = shift)
     {
-	my $def = ref $_[0] ? shift : {};
-	$def->{isa} = $def->{isa} ? ( ref $def->{isa} ? $def->{isa} : [$def->{isa}] ) : [];
+        my $def = ref $_[0] ? shift : {};
+        $def->{isa} = $def->{isa} ? ( ref $def->{isa} ? $def->{isa} : [$def->{isa}] ) : [];
 
         $c{$subclass} = $def;
     }
@@ -36,32 +36,32 @@ sub import
     {
         my $def = $c{$subclass};
 
-	# We already made this one.
-	next if $CLASSES{$subclass};
+        # We already made this one.
+        next if $CLASSES{$subclass};
 
-	{
-	    no strict 'refs';
-	    foreach my $parent (@{ $def->{isa} })
-	    {
-		unless ( keys %{"$parent\::"} )
-		{
-		    $needs_parent{$subclass} = { parents => $def->{isa},
-						 def => $def };
-		    next MAKE_CLASSES;
-		}
-	    }
-	}
+        {
+            no strict 'refs';
+            foreach my $parent (@{ $def->{isa} })
+            {
+                unless ( keys %{"$parent\::"} )
+                {
+                    $needs_parent{$subclass} = { parents => $def->{isa},
+                                                 def => $def };
+                    next MAKE_CLASSES;
+                }
+            }
+        }
 
-	$class->_make_subclass( subclass => $subclass,
-				def => $def || {},
+        $class->_make_subclass( subclass => $subclass,
+                                def => $def || {},
                               );
     }
 
     foreach my $subclass (keys %needs_parent)
     {
-	# This will be used to spot circular references.
-	my %seen;
-	$class->_make_parents( \%needs_parent, $subclass, \%seen );
+        # This will be used to spot circular references.
+        my %seen;
+        $class->_make_parents( \%needs_parent, $subclass, \%seen );
     }
 }
 
@@ -82,25 +82,25 @@ sub _make_parents
     # mentioned is in the 'isa' param for some other class, which is
     # not a good enough reason to make a new class.
     die "Class $subclass appears to be a typo as it is only specified in the 'isa' param for $child\n"
-	unless exists $needs->{$subclass} || $CLASSES{$subclass} || keys %{"$subclass\::"};
+        unless exists $needs->{$subclass} || $CLASSES{$subclass} || keys %{"$subclass\::"};
 
     foreach my $c ( @{ $needs->{$subclass}{parents} } )
     {
-	# It's been made
-	next if $CLASSES{$c} || keys %{"$c\::"};
+        # It's been made
+        next if $CLASSES{$c} || keys %{"$c\::"};
 
-	die "There appears to be some circularity involving $subclass\n"
-	    if $seen->{$subclass};
+        die "There appears to be some circularity involving $subclass\n"
+            if $seen->{$subclass};
 
-	$seen->{$subclass} = 1;
+        $seen->{$subclass} = 1;
 
-	$class->_make_parents( $needs, $c, $seen, $subclass );
+        $class->_make_parents( $needs, $c, $seen, $subclass );
     }
 
     return if $CLASSES{$subclass} || keys %{"$subclass\::"};
 
     $class->_make_subclass( subclass => $subclass,
-			    def => $needs->{$subclass}{def} );
+                            def => $needs->{$subclass}{def} );
 }
 
 sub _make_subclass
@@ -114,7 +114,7 @@ sub _make_subclass
     my $isa;
     if ($def->{isa})
     {
-	$isa = ref $def->{isa} ? join ' ', @{ $def->{isa} } : $def->{isa};
+        $isa = ref $def->{isa} ? join ' ', @{ $def->{isa} } : $def->{isa};
     }
     $isa ||= $BASE_EXC_CLASS;
 
@@ -134,8 +134,8 @@ EOPERL
 
     if ($def->{description})
     {
-	(my $desc = $def->{description}) =~ s/([\\\'])/\\$1/g;
-	$code .= <<"EOPERL";
+        (my $desc = $def->{description}) =~ s/([\\\'])/\\$1/g;
+        $code .= <<"EOPERL";
 sub description
 {
     return '$desc';
@@ -146,16 +146,16 @@ EOPERL
     my @fields;
     if ( my $fields = $def->{fields} )
     {
-	@fields = UNIVERSAL::isa($fields, 'ARRAY') ? @$fields : $fields;
+        @fields = UNIVERSAL::isa($fields, 'ARRAY') ? @$fields : $fields;
 
-	$code .=
+        $code .=
             "sub Fields { return (\$_[0]->SUPER::Fields, " .
             join(", ", map { "'$_'" } @fields) . ") }\n\n";
 
         foreach my $field (@fields)
-	{
-	    $code .= sprintf("sub %s { \$_[0]->{%s} }\n", $field, $field);
-	}
+        {
+            $code .= sprintf("sub %s { \$_[0]->{%s} }\n", $field, $field);
+        }
     }
 
     if ( my $alias = $def->{alias} )
@@ -177,6 +177,8 @@ EOPERL
 sub caught
 {
     my $e = $@;
+
+    return $e unless $_[1];
 
     return unless blessed($e) && $e->isa( $_[1] );
     return $e;
@@ -224,7 +226,7 @@ BEGIN
     no strict 'refs';
     foreach my $f (@fields)
     {
-	*{$f} = sub { my $s = shift; return $s->{$f}; };
+        *{$f} = sub { my $s = shift; return $s->{$f}; };
     }
     *{'error'} = \&message;
 }
@@ -408,6 +410,7 @@ Exception::Class - A module that allows you to declare real exception classes in
         { isa => 'YetAnotherException',
           fields => [ 'grandiosity', 'quixotic' ],
           alias => 'throw_fields',
+        },
       );
 
   # try
@@ -417,18 +420,19 @@ Exception::Class - A module that allows you to declare real exception classes in
   # catch
   if ( $e = Exception::Class->caught('MyException') )
   {
-     warn $@->error, "\n, $@->trace->as_string, "\n";
-     warn join ' ',  $@->euid, $@->egid, $@->uid, $@->gid, $@->pid, $@->time;
+     warn $e->error, "\n", $e->trace->as_string, "\n";
+     warn join ' ',  $e->euid, $e->egid, $e->uid, $e->gid, $e->pid, $e->time;
 
      exit;
   }
   elsif ( $e = Exception::Class->caught('ExceptionWithFields') )
   {
-     $@->quixotic ? do_something_wacky() : do_something_sane();
+     $e->quixotic ? do_something_wacky() : do_something_sane();
   }
   else
   {
-     ref $@ ? $@->rethrow : die $@;
+     $e = Exception::Class->caught();
+     ref $e ? $e->rethrow : die $e;
   }
 
   # use an alias - without parens subroutine name is checked at
@@ -551,9 +555,10 @@ exceptions in a safe manner:
      do_something_with_exception($e);
  }
 
-The C<caught()> method returns an exception object if the last thrown
-exception is of the given class, or a subclass of that class.
-Otherwise it returns false.
+The C<caught()> method takes a class name and returns an exception
+object if the last thrown exception is of the given class, or a
+subclass of that class.  If it is not given any arguments, it simply
+returns C<$@>.
 
 You should B<always> make a copy of the exception object, rather than
 using C<$@> directly.  This is necessary because if your C<cleanup()>
