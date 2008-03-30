@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.50.
+signed via the Module::Signature module, version 0.55.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -14,21 +14,23 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 449de411e61cea559ab012f090f21016f576a4fb Build.PL
-SHA1 7197e852f848fe2df11260feb4f991736ae2605b Changes
-SHA1 0c945b81892562a2f056405f3fe5442bea0ba406 LICENSE
-SHA1 0b236c2cb79401e20af2119fc2855ef51aec81fb MANIFEST
-SHA1 bc58793da43d51ea5e5426e51a1af7bddfff9a71 META.yml
-SHA1 2f975b624b3d267d7b6b25a500f3032ea8749509 Makefile.PL
-SHA1 4a0a99a8c3a3a0356d88759c7bfdf519ca97cafb README
-SHA1 81195085133038a51c3c118d7118469354bd3bbb lib/Exception/Class.pm
-SHA1 2db7f15cfaccc2fc49bbd46cae309bbc7f60f409 t/basic.t
+SHA1 5f0d8c63d57e17a4fd71f16253c4199459fbf78c .shipit
+SHA1 1485ed1c81c7b5587f867049d75da0b3db5a13e6 Build.PL
+SHA1 c02a50529c9c4c20a7b233dd14948e79bb8b05d7 Changes
+SHA1 f235ba4160673bcb7c9d58c2f09dbc7fc0efadea LICENSE
+SHA1 e1326666ba4000b34cf057dbd3d807acb92ed2d9 MANIFEST
+SHA1 7c364c0177e603a4562696738a883e4aeabb7554 META.yml
+SHA1 0f7fce3b5951d603f993dc675ccaf843b6749e97 Makefile.PL
+SHA1 52f1457c6db547e578ae15c64b201105ca90a5b6 lib/Exception/Class.pm
+SHA1 cec61865b88cb8e9ce8b9a5e930e85c44142dd2e t/basic.t
 SHA1 58af03881eb473337b01aa4f07469e86d2090d8d t/caught.t
 SHA1 d6e425dcfb12707a1a33c0592641dbf5dd558370 t/ignore.t
+SHA1 9de9dfd55e96087b41493345c1bb756529661124 t/pod-coverage.t
+SHA1 cec881e89926d320475f9de2b7fad02c2169f510 t/pod.t
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFDyUC43Or3ZzQuifMRAsOVAKDm9ibG22hbELj1GAEcvAn9krdszwCfQwbP
-yXYTeS+ULC14CiIHU/FlVJI=
-=B/rD
+iD8DBQFH782W3Or3ZzQuifMRArfMAJ4trkcGZm95m2bQT62qxZvcUgyGQwCguXN5
+oi0ON/KqE38YDRNbxFSZHNg=
+=HyH5
 -----END PGP SIGNATURE-----

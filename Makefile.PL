@@ -6,7 +6,7 @@ WriteMakefile
           'VERSION_FROM' => 'lib/Exception/Class.pm',
           'PREREQ_PM' => {
                            'Class::Data::Inheritable' => '0.02',
-                           'Devel::StackTrace' => '1.12',
+                           'Devel::StackTrace' => '1.17',
                            'Scalar::Util' => '0',
                            'Test::More' => '0.46'
                          },

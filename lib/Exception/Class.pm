@@ -10,7 +10,7 @@ use Scalar::Util qw(blessed);
 
 BEGIN { $BASE_EXC_CLASS ||= 'Exception::Class::Base'; }
 
-$VERSION = '1.23';
+$VERSION = '1.24';
 
 sub import
 {
@@ -189,7 +189,7 @@ sub Classes { sort keys %Exception::Class::CLASSES }
 package Exception::Class::Base;
 
 use Class::Data::Inheritable;
-use Devel::StackTrace 1.07;
+use Devel::StackTrace 1.17;
 
 use base qw(Class::Data::Inheritable);
 
@@ -204,6 +204,8 @@ BEGIN
     __PACKAGE__->mk_classdata('RespectOverload');
     __PACKAGE__->RespectOverload(0);
 
+    __PACKAGE__->mk_classdata('MaxArgLength');
+    __PACKAGE__->MaxArgLength(0);
 
     sub Fields { () }
 }
@@ -300,6 +302,7 @@ sub _initialize
                                 ignore_package   => \@ignore_package,
                                 no_refs          => $self->NoRefs,
                                 respect_overload => $self->RespectOverload,
+                                max_arg_length   => $self->MaxArgLength,
                               );
 
     if ( my $frame = $self->trace->frame(0) )
@@ -635,6 +638,20 @@ This method defaults to false.  As with C<Trace()>, it is inherited by
 subclasses but setting it in a subclass makes it independent
 thereafter.
 
+=item * MaxArgLength($boolean)
+
+When a C<Devel::StackTrace> object stringifies, by default it displays
+the full argument for each function. This parameter can be used to
+limit the maximum length of each argument.
+
+Since C<Exception::Class::Base> uses C<Devel::StackTrace> internally,
+this method provides a way to tell C<Devel::StackTrace> to limit the
+length of arguments.
+
+This method defaults to 0. As with C<Trace()>, it is inherited by
+subclasses but setting it in a subclass makes it independent
+thereafter.
+
 =item * Fields
 
 This method returns the extra fields defined for the given class, as
@@ -871,21 +888,23 @@ somewhere:
 
 It's a hack but apparently it works.
 
+=head1 SUPPORT
+
+Please submit bugs to the CPAN RT system at
+http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Exception%3A%3AClass or
+via email at bug-exception-class@rt.cpan.org.
+
 =head1 AUTHOR
 
 Dave Rolsky, <autarch@urth.org>
 
-=head1 SEE ALSO
+=head1 COPYRIGHT
 
-Devel::StackTrace - used by this module to create stack traces
+Copyright (c) 2000-2006 David Rolsky.  All rights reserved.  This
+program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
 
-Error.pm - implements try/catch in Perl.  Also provides an exception
-base class.
-
-Test::Exception - a module that helps you test exception based code.
-
-Numerous other modules/frameworks seem to have their own exception
-classes (SPOPS and Template Toolkit, to name two) but none of these
-seem to be designed for use outside of these packages.
+The full text of the license can be found in the LICENSE file included
+with this module.
 
 =cut
