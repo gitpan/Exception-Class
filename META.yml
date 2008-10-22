@@ -1,6 +1,6 @@
 ---
 name: Exception-Class
-version: 1.24
+version: 1.25
 author:
   - 'Dave Rolsky, <autarch@urth.org>'
 abstract: A module that allows you to declare real exception classes in Perl
@@ -15,7 +15,7 @@ requires:
 provides:
   Exception::Class:
     file: lib/Exception/Class.pm
-    version: 1.24
+    version: 1.25
   Exception::Class::Base:
     file: lib/Exception/Class.pm
     version: 1.2
