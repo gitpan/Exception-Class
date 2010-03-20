@@ -1,19 +1,19 @@
-#!/usr/bin/perl -w
-
 use strict;
+use warnings;
 
-use Test::More tests => 9;
+use Test::More;
 
-use Exception::Class ( 'Foo',
-                       'Bar' => { isa => 'Foo' },
-                     );
+use Exception::Class (
+    'Foo',
+    'Bar' => { isa => 'Foo' },
+);
 
 {
     eval { Foo->throw( error => 'foo' ) };
 
     my $e = Exception::Class->caught('Bar');
 
-    ok( ! $e, 'caught returns false for wrong class' );
+    ok( !$e, 'caught returns false for wrong class' );
 }
 
 {
@@ -21,7 +21,7 @@ use Exception::Class ( 'Foo',
 
     my $e = Bar->caught();
 
-    ok( ! $e, 'caught returns false for wrong class' );
+    ok( !$e, 'caught returns false for wrong class' );
 }
 
 {
@@ -51,3 +51,5 @@ use Exception::Class ( 'Foo',
     ok( $e, 'Foo->caught() returns exception' );
     isa_ok( $e, 'Foo' );
 }
+
+done_testing();

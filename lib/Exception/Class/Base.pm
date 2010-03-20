@@ -3,18 +3,20 @@ package Exception::Class::Base;
 use strict;
 use warnings;
 
-our $VERSION = '1.20';
+our $VERSION = '1.30';
 
 use Class::Data::Inheritable;
 use Devel::StackTrace 1.20;
 
 use base qw(Class::Data::Inheritable);
 
-BEGIN
-{
+BEGIN {
     __PACKAGE__->mk_classdata('Trace');
     __PACKAGE__->mk_classdata('NoRefs');
     __PACKAGE__->NoRefs(1);
+
+    __PACKAGE__->mk_classdata('NoContextInfo');
+    __PACKAGE__->NoContextInfo(0);
 
     __PACKAGE__->mk_classdata('RespectOverload');
     __PACKAGE__->RespectOverload(0);
@@ -27,17 +29,13 @@ BEGIN
 
 use overload
     # an exception is always true
-    bool => sub { 1 },
-    '""' => 'as_string',
-    fallback => 1;
+    bool => sub {1}, '""' => 'as_string', fallback => 1;
 
 # Create accessor routines
-BEGIN
-{
+BEGIN {
     my @fields = qw( message pid uid euid gid egid time trace );
 
-    foreach my $f (@fields)
-    {
+    foreach my $f (@fields) {
         my $sub = sub { my $s = shift; return $s->{$f}; };
 
         no strict 'refs';
@@ -45,16 +43,14 @@ BEGIN
     }
     *error = \&message;
 
-    my %trace_fields =
-        ( package => 'package',
-          file    => 'filename',
-          line    => 'line',
-        );
+    my %trace_fields = (
+        package => 'package',
+        file    => 'filename',
+        line    => 'line',
+    );
 
-    while ( my ( $f, $m ) = each %trace_fields )
-    {
-        my $sub = sub
-        {
+    while ( my ( $f, $m ) = each %trace_fields ) {
+        my $sub = sub {
             my $s = shift;
             return $s->{$f} if exists $s->{$f};
 
@@ -71,8 +67,7 @@ BEGIN
 
 sub Classes { Exception::Class::Classes() }
 
-sub throw
-{
+sub throw {
     my $proto = shift;
 
     $proto->rethrow if ref $proto;
@@ -80,15 +75,13 @@ sub throw
     die $proto->new(@_);
 }
 
-sub rethrow
-{
+sub rethrow {
     my $self = shift;
 
     die $self;
 }
 
-sub new
-{
+sub new {
     my $proto = shift;
     my $class = ref $proto || $proto;
 
@@ -99,8 +92,7 @@ sub new
     return $self;
 }
 
-sub _initialize
-{
+sub _initialize {
     my $self = shift;
     my %p = @_ == 1 ? ( error => $_[0] ) : @_;
 
@@ -108,73 +100,72 @@ sub _initialize
 
     $self->{show_trace} = $p{show_trace} if exists $p{show_trace};
 
-    # CORE::time is important to fix an error with some versions of
-    # Perl
-    $self->{time} = CORE::time();
-    $self->{pid}  = $$;
-    $self->{uid}  = $<;
-    $self->{euid} = $>;
-    $self->{gid}  = $(;
-    $self->{egid} = $);
-
-    my @ignore_class   = (__PACKAGE__);
-    my @ignore_package = 'Exception::Class';
-
-    if ( my $i = delete $p{ignore_class} )
-    {
-        push @ignore_class, ( ref($i) eq 'ARRAY' ? @$i : $i );
+    if ( $self->NoContextInfo() ) {
+        $self->{show_trace} = 0;
+        $self->{package} = $self->{file} = $self->{line} = undef;
     }
+    else {
+        # CORE::time is important to fix an error with some versions of
+        # Perl
+        $self->{time} = CORE::time();
+        $self->{pid}  = $$;
+        $self->{uid}  = $<;
+        $self->{euid} = $>;
+        $self->{gid}  = $(;
+        $self->{egid} = $);
 
-    if ( my $i = delete $p{ignore_package} )
-    {
-        push @ignore_package, ( ref($i) eq 'ARRAY' ? @$i : $i );
+        my @ignore_class   = (__PACKAGE__);
+        my @ignore_package = 'Exception::Class';
+
+        if ( my $i = delete $p{ignore_class} ) {
+            push @ignore_class, ( ref($i) eq 'ARRAY' ? @$i : $i );
+        }
+
+        if ( my $i = delete $p{ignore_package} ) {
+            push @ignore_package, ( ref($i) eq 'ARRAY' ? @$i : $i );
+        }
+
+        $self->{trace} = Devel::StackTrace->new(
+            ignore_class     => \@ignore_class,
+            ignore_package   => \@ignore_package,
+            no_refs          => $self->NoRefs,
+            respect_overload => $self->RespectOverload,
+            max_arg_length   => $self->MaxArgLength,
+        );
     }
-
-    $self->{trace} =
-        Devel::StackTrace->new( ignore_class     => \@ignore_class,
-                                ignore_package   => \@ignore_package,
-                                no_refs          => $self->NoRefs,
-                                respect_overload => $self->RespectOverload,
-                                max_arg_length   => $self->MaxArgLength,
-                              );
 
     my %fields = map { $_ => 1 } $self->Fields;
-    while ( my ($key, $value) = each %p )
-    {
-       next if $key =~ /^(?:error|message|show_trace)$/;
+    while ( my ( $key, $value ) = each %p ) {
+        next if $key =~ /^(?:error|message|show_trace)$/;
 
-       if ( $fields{$key})
-       {
-           $self->{$key} = $value;
-       }
-       else
-       {
-           Exception::Class::Base->throw
-               ( error =>
-                 "unknown field $key passed to constructor for class " . ref $self );
-       }
+        if ( $fields{$key} ) {
+            $self->{$key} = $value;
+        }
+        else {
+            Exception::Class::Base->throw(
+                error => "unknown field $key passed to constructor for class "
+                    . ref $self );
+        }
     }
 }
 
-sub description
-{
+sub description {
     return 'Generic exception';
 }
 
-sub show_trace
-{
+sub show_trace {
     my $self = shift;
 
-    if (@_)
-    {
+    return 0 unless $self->{trace};
+
+    if (@_) {
         $self->{show_trace} = shift;
     }
 
     return exists $self->{show_trace} ? $self->{show_trace} : $self->Trace;
 }
 
-sub as_string
-{
+sub as_string {
     my $self = shift;
 
     my $str = $self->full_message;
@@ -190,27 +181,24 @@ sub full_message { $_[0]->{message} }
 # The %seen bit protects against circular inheritance.
 #
 eval <<'EOF' if $] == 5.006;
-sub isa
-{
-    my ($inheritor, $base) = @_;
+sub isa {
+    my ( $inheritor, $base ) = @_;
     $inheritor = ref($inheritor) if ref($inheritor);
 
     my %seen;
 
     no strict 'refs';
-    my @parents = ($inheritor, @{"$inheritor\::ISA"});
-    while (my $class = shift @parents)
-    {
+    my @parents = ( $inheritor, @{"$inheritor\::ISA"} );
+    while ( my $class = shift @parents ) {
         return 1 if $class eq $base;
 
-        push @parents, grep {!$seen{$_}++} @{"$class\::ISA"};
+        push @parents, grep { !$seen{$_}++ } @{"$class\::ISA"};
     }
     return 0;
 }
 EOF
 
-sub caught
-{
+sub caught {
     return Exception::Class->caught(shift);
 }
 
@@ -239,7 +227,7 @@ information about the exception.
 =head2 MyException->Trace($boolean)
 
 Each C<Exception::Class::Base> subclass can be set individually to
-include a a stracktrace when the C<as_string> method is called.  The
+include a a stacktrace when the C<as_string> method is called.  The
 default is to not include a stacktrace.  Calling this method with a
 value changes this behavior.  It always returns the current value
 (after any change is applied).
@@ -331,7 +319,7 @@ control.
 =head2 MyException->throw( error => $error )
 
 This method creates a new object with the given error message.  If no
-error message is given, this will be an empty string.  It then die's
+error message is given, this will be an empty string.  It then dies
 with this object as its argument.
 
 This method also takes a C<show_trace> parameter which indicates
@@ -424,7 +412,7 @@ Returns the trace object associated with the object.
 
 =head2 $exception->show_trace($boolean)
 
-This method can be used to set whether or not a strack trace is
+This method can be used to set whether or not a stack trace is
 included when the as_string method is called or the object is
 stringified.
 
@@ -440,6 +428,25 @@ C<Carp::confess()>.
 Called by the C<as_string()> method to get the message.  By default,
 this is the same as calling the C<message()> method, but may be
 overridden by a subclass.  See below for details.
+
+=head1 LIGHTWEIGHT EXCEPTIONS
+
+A lightweight exception is one which records no information about its context
+when it is created. This can be achieved by setting C<<
+$class->NoContextInfo() >> to a true value.
+
+You can make this the default for a class of exceptions by setting it after
+creating the class:
+
+  use Exception::Class (
+      'LightWeight',
+      'HeavyWeight',
+  );
+
+  LightWeight->NoContextInfo(1);
+
+A lightweight exception does have a stack trace object, nor does it record the
+time, pid, uid, euid, gid, or egid. It only has a message.
 
 =head1 OVERLOADING
 
@@ -469,8 +476,7 @@ Inside the C<as_string()> method, the message (non-stack trace)
 portion of the error is generated by calling the C<full_message()>
 method.  This can be easily overridden.  For example:
 
-  sub full_message
-  {
+  sub full_message {
       my $self = shift;
 
       my $msg = $self->message;

@@ -1,27 +1,31 @@
 ---
-name: Exception-Class
-version: 1.29
+abstract: 'A module that allows you to declare real exception classes in Perl'
 author:
   - 'Dave Rolsky, E<gt>autarch@urth.orgE<lt>'
-abstract: A module that allows you to declare real exception classes in Perl
+build_requires:
+  Test::More: 0.88
+configure_requires:
+  Module::Build: 0.36
+generated_by: 'Module::Build version 0.3603'
 license: perl
-resources:
-  license: http://dev.perl.org/licenses/
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Exception-Class
+provides:
+  Exception::Class:
+    file: lib/Exception/Class.pm
+    version: 1.30
+  Exception::Class::Base:
+    file: lib/Exception/Class/Base.pm
+    version: 1.30
 requires:
   Class::Data::Inheritable: 0.02
   Devel::StackTrace: 1.20
   Scalar::Util: 0
   perl: 5.008001
-build_requires:
-  Test::More: 0.46
-provides:
-  Exception::Class:
-    file: lib/Exception/Class.pm
-    version: 1.29
-  Exception::Class::Base:
-    file: lib/Exception/Class/Base.pm
-    version: 1.20
-generated_by: Module::Build version 0.32
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.2.html
-  version: 1.2
+resources:
+  bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=Exception-Class
+  license: http://dev.perl.org/licenses/
+  repository: http://hg.urth.org/hg/Exception-Class
+version: 1.30
