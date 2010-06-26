@@ -1,4 +1,7 @@
 package Exception::Class;
+BEGIN {
+  $Exception::Class::VERSION = '1.31';
+}
 
 use 5.008001;
 
@@ -9,8 +12,6 @@ use Scalar::Util qw(blessed);
 
 our $BASE_EXC_CLASS;
 BEGIN { $BASE_EXC_CLASS ||= 'Exception::Class::Base'; }
-
-our $VERSION = '1.30';
 
 our %CLASSES;
 
@@ -196,11 +197,19 @@ sub Classes { sort keys %Exception::Class::CLASSES }
 
 1;
 
-__END__
+# ABSTRACT: A module that allows you to declare real exception classes in Perl
+
+
+
+=pod
 
 =head1 NAME
 
 Exception::Class - A module that allows you to declare real exception classes in Perl
+
+=head1 VERSION
+
+version 1.31
 
 =head1 SYNOPSIS
 
@@ -496,15 +505,18 @@ L<http://www.urth.org/~autarch/fs-donation.html>
 
 =head1 AUTHOR
 
-Dave Rolsky, E<gt>autarch@urth.orgE<lt>
+  Dave Rolsky <autarch@urth.org>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2000-2009 David Rolsky.  All rights reserved.  This
-program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
+This software is Copyright (c) 2010 by Dave Rolsky.
 
-The full text of the license can be found in the LICENSE file included
-with this module.
+This is free software, licensed under:
+
+  The Artistic License 2.0
 
 =cut
+
+
+__END__
+

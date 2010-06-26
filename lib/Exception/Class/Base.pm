@@ -1,12 +1,14 @@
 package Exception::Class::Base;
+BEGIN {
+  $Exception::Class::Base::VERSION = '1.31';
+}
 
 use strict;
 use warnings;
 
-our $VERSION = '1.30';
-
 use Class::Data::Inheritable;
 use Devel::StackTrace 1.20;
+use Scalar::Util qw( blessed );
 
 use base qw(Class::Data::Inheritable);
 
@@ -199,14 +201,29 @@ sub isa {
 EOF
 
 sub caught {
-    return Exception::Class->caught(shift);
+    my $class = shift;
+
+    my $e = $@;
+
+    return unless defined $e && blessed($e) && $e->isa($class);
+    return $e;
 }
 
 1;
 
+# ABSTRACT: A base class for exception objects
+
+
+
+=pod
+
 =head1 NAME
 
-Exception::Class::Base - Base class for exception classes created by Exception::Class
+Exception::Class::Base - A base class for exception objects
+
+=head1 VERSION
+
+version 1.31
 
 =head1 SYNOPSIS
 
@@ -227,7 +244,7 @@ information about the exception.
 =head2 MyException->Trace($boolean)
 
 Each C<Exception::Class::Base> subclass can be set individually to
-include a a stacktrace when the C<as_string> method is called.  The
+include a stacktrace when the C<as_string> method is called.  The
 default is to not include a stacktrace.  Calling this method with a
 value changes this behavior.  It always returns the current value
 (after any change is applied).
@@ -488,15 +505,18 @@ method.  This can be easily overridden.  For example:
 
 =head1 AUTHOR
 
-Dave Rolsky, E<gt>autarch@urth.orgE<lt>
+  Dave Rolsky <autarch@urth.org>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2000-2009 David Rolsky.  All rights reserved.  This
-program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
+This software is Copyright (c) 2010 by Dave Rolsky.
 
-The full text of the license can be found in the LICENSE file included
-with this module.
+This is free software, licensed under:
+
+  The Artistic License 2.0
 
 =cut
+
+
+__END__
+

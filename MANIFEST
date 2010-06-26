@@ -1,19 +1,24 @@
-bench/simple
-Build.PL
 Changes
+INSTALL
+LICENSE
+MANIFEST
+META.json
+META.yml
+Makefile.PL
+README
+SIGNATURE
+bench/simple
+dist.ini
 lib/Exception/Class.pm
 lib/Exception/Class/Base.pm
-LICENSE
-MANIFEST			This list of files
 t/basic.t
 t/caught.t
 t/context.t
+t/ecb-standalone.t
 t/ignore.t
-xt/kwalitee.t
-xt/pod-coverage.t
-xt/pod-spell.t
-xt/pod.t
-Makefile.PL
-META.yml
-README
-SIGNATURE    Added here by Module::Build
+t/release-eol.t
+t/release-kwalitee.t
+t/release-no-tabs.t
+t/release-pod-coverage.t
+t/release-pod-spell.t
+t/release-pod.t

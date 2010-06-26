@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.55.
+signed via the Module::Signature module, version 0.61.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -14,28 +14,33 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 747f4ca275da1515d79e68a9c08648870f8b183b Build.PL
-SHA1 d946dbcaaf83cf6d37f8552a5e487969d1abb3c2 Changes
-SHA1 f235ba4160673bcb7c9d58c2f09dbc7fc0efadea LICENSE
-SHA1 956d0537a703766f61b59988090583486e4cb3bf MANIFEST
-SHA1 8465c53a779946a3a7aff903a1c671cca0dd5c29 META.yml
-SHA1 b55f280f51ebafe048a15c2022d9e586044b9f86 Makefile.PL
-SHA1 483ddb10a9296af92679e0063d3b5ed4cfa5b344 README
+SHA1 81ffefc781043b00c23392c310fe919493cf912a Changes
+SHA1 0862af1f87fdd7f860de1a139a0e1e1cf96a8eeb INSTALL
+SHA1 23c628b4a8a36738405ccdacaeb912d2e727b4c0 LICENSE
+SHA1 e51d6b5ec67e360e3d63c51cf891ddb725f09a1a MANIFEST
+SHA1 ad355703e766b413b68b1d6eff52814d49abd8a0 META.json
+SHA1 dd8179b87a62ecb033f823def7013ce5e7a31b29 META.yml
+SHA1 fc82a888b133d546f49a9f6806713259fc248635 Makefile.PL
+SHA1 0a0722c342ba6476fc681db3802b1e467426dce9 README
 SHA1 d770da081da12a7af73df3afacd3f54fcb7fc8e4 bench/simple
-SHA1 ee4190ac6a1aa4655c55f82e66e77cfb979fb0a6 lib/Exception/Class.pm
-SHA1 655bd29f14619e9da9a70a01890f9f8d4a5af685 lib/Exception/Class/Base.pm
+SHA1 ecbe40dc95c8ed4546fe11ebeb9a84782b04d37c dist.ini
+SHA1 1391983f4e57a74b9687b7aa1680c8d323bd1f88 lib/Exception/Class.pm
+SHA1 3749971eed99283736a13fa9338f6ec5a29e4b3e lib/Exception/Class/Base.pm
 SHA1 5e25a15317b2df52fa034a1e4ae61de2df03c41d t/basic.t
 SHA1 d8c9c6fb09f3cb23d581b4285eff8db2255c9c92 t/caught.t
 SHA1 ba6dca4be89b1e767dd17e8e2afd2b1f591a85dc t/context.t
+SHA1 177f8f91e22f65f4556b967051a9086893f773b2 t/ecb-standalone.t
 SHA1 305c0aefcef898bc02f2398986c09b26da8480b1 t/ignore.t
-SHA1 437178b17e5942761ac30bb436dcac115e5adff8 xt/kwalitee.t
-SHA1 b3806896300391ce08a3f76cf8cf7437a9a81f4e xt/pod-coverage.t
-SHA1 c8f85b357b35c3f3841739bdb68f85ab3f4fa8ac xt/pod-spell.t
-SHA1 9bb24d755c9e2fbf5d9b7db34df15637ccd8e3f6 xt/pod.t
+SHA1 24b525e3c18f37f8022a01ec30de757cefb679ff t/release-eol.t
+SHA1 961a1e2c92d836c8cad2d34b784cbc75345dec63 t/release-kwalitee.t
+SHA1 455d1dd1867212a665ad5ea4126b572411de300c t/release-no-tabs.t
+SHA1 07d73f5b304cd92c378a6de7a54976a9c810f856 t/release-pod-coverage.t
+SHA1 0f02aafca520bf06f505a7f264455151a08c6f6a t/release-pod-spell.t
+SHA1 0bf5c7d045bcd17b72749ea8d57bfc2435913095 t/release-pod.t
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iEYEARECAAYFAkuk/NEACgkQIgMCsV8qvRLCGACfQj6Xn2SBLOD/JvVW2eMwAEJA
-dsQAn2JNCRVdx7lFp/rF+ahZXOq9VdLY
-=XiKD
+iEYEARECAAYFAkwmXoQACgkQIgMCsV8qvRKAuQCfUTlUIH/YvSlPCkwNbKqF04IO
+JIIAn0n3NmNcBrilOkBZFQ3WrJCMZ274
+=NFkV
 -----END PGP SIGNATURE-----
