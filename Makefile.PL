@@ -12,8 +12,7 @@ my %WriteMakefileArgs = (
   'ABSTRACT' => 'A module that allows you to declare real exception classes in Perl',
   'AUTHOR' => 'Dave Rolsky <autarch@urth.org>',
   'BUILD_REQUIRES' => {
-    'Test::More' => '0.88',
-    'Test::Most' => '0'
+    'Test::More' => '0.88'
   },
   'CONFIGURE_REQUIRES' => {
     'ExtUtils::MakeMaker' => '6.31'
@@ -27,7 +26,7 @@ my %WriteMakefileArgs = (
     'Devel::StackTrace' => '1.20',
     'Scalar::Util' => '0'
   },
-  'VERSION' => '1.31',
+  'VERSION' => '1.32',
   'test' => {
     'TESTS' => 't/*.t'
   }

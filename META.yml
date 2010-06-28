@@ -4,7 +4,6 @@ author:
   - 'Dave Rolsky <autarch@urth.org>'
 build_requires:
   Test::More: 0.88
-  Test::Most: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.31
 dynamic_config: 0
@@ -22,4 +21,4 @@ requires:
 resources:
   bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=Exception-Class
   repository: http://hg.urth.org/hg/Exception-Class
-version: 1.31
+version: 1.32

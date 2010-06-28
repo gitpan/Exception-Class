@@ -1,6 +1,6 @@
 package Exception::Class::Base;
 BEGIN {
-  $Exception::Class::Base::VERSION = '1.31';
+  $Exception::Class::Base::VERSION = '1.32';
 }
 
 use strict;
@@ -223,7 +223,7 @@ Exception::Class::Base - A base class for exception objects
 
 =head1 VERSION
 
-version 1.31
+version 1.32
 
 =head1 SYNOPSIS
 
