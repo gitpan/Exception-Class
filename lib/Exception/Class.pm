@@ -1,6 +1,6 @@
 package Exception::Class;
-BEGIN {
-  $Exception::Class::VERSION = '1.32';
+{
+  $Exception::Class::VERSION = '1.33';
 }
 
 use 5.008001;
@@ -87,8 +87,8 @@ sub _make_parents {
     die
         "Class $subclass appears to be a typo as it is only specified in the 'isa' param for $child\n"
         unless exists $needs->{$subclass}
-            || $CLASSES{$subclass}
-            || keys %{"$subclass\::"};
+        || $CLASSES{$subclass}
+        || keys %{"$subclass\::"};
 
     foreach my $c ( @{ $needs->{$subclass}{parents} } ) {
 
@@ -153,7 +153,7 @@ EOPERL
 
         $code
             .= "sub Fields { return (\$_[0]->SUPER::Fields, "
-            . join( ", ", map {"'$_'"} @fields )
+            . join( ", ", map { "'$_'" } @fields )
             . ") }\n\n";
 
         foreach my $field (@fields) {
@@ -209,7 +209,7 @@ Exception::Class - A module that allows you to declare real exception classes in
 
 =head1 VERSION
 
-version 1.32
+version 1.33
 
 =head1 SYNOPSIS
 
@@ -401,8 +401,8 @@ C<isa()> in that class like this:
 
  sub isa { shift->rethrow }
 
-Of course, this only works if you always call 
-C<< Exception::Class->caught() >> after an C<eval>.
+Of course, this only works if you always call C<< Exception::Class->caught()
+>> after an C<eval>.
 
 =head1 USAGE RECOMMENDATION
 
@@ -460,21 +460,11 @@ note that if you simply define a subclass via the normal Perl method
 of setting C<@ISA> or C<use base>, then your subclass will not be
 included.
 
-=head1 OTHER EXCEPTION MODULES (try/catch syntax)
+=head1 Try::Tiny
 
-If you are interested in adding try/catch/finally syntactic sugar to
-your code then I recommend you check out U. Arun Kumar's C<Error.pm>
-module, which implements this syntax.  It also includes its own base
-exception class, C<Error::Simple>.
-
-If you would prefer to use the L<Exception::Class::Base> class
-included with this module, you'll have to add this to your code
-somewhere:
-
-  push @Exception::Class::Base::ISA, 'Error'
-      unless Exception::Class::Base->isa('Error');
-
-It's a hack but apparently it works.
+If you are interested in adding try/catch/finally syntactic sugar to your code
+then I recommend you check out L<Try::Tiny>. This is a great module that helps
+you ignore some of the weirdness with C<eval> and C<$@>.
 
 =head1 SUPPORT
 
@@ -505,7 +495,7 @@ L<http://www.urth.org/~autarch/fs-donation.html>
 
 =head1 AUTHOR
 
-  Dave Rolsky <autarch@urth.org>
+Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 
@@ -513,7 +503,7 @@ This software is Copyright (c) 2010 by Dave Rolsky.
 
 This is free software, licensed under:
 
-  The Artistic License 2.0
+  The Artistic License 2.0 (GPL Compatible)
 
 =cut
 

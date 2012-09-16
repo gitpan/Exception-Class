@@ -4,7 +4,7 @@
       "Dave Rolsky <autarch@urth.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.101740, CPAN::Meta::Converter version 2.101670",
+   "generated_by" : "Dist::Zilla version 4.300021, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "artistic_2"
    ],
@@ -16,20 +16,7 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.31"
-         }
-      },
-      "runtime" : {
-         "requires" : {
-            "Class::Data::Inheritable" : "0.02",
-            "Devel::StackTrace" : "1.20",
-            "Scalar::Util" : 0,
-            "perl" : "5.008001"
-         }
-      },
-      "test" : {
-         "requires" : {
-            "Test::More" : "0.88"
+            "ExtUtils::MakeMaker" : "6.30"
          }
       }
    },
@@ -40,11 +27,11 @@
          "web" : "http://rt.cpan.org/NoAuth/Bugs.html?Dist=Exception-Class"
       },
       "repository" : {
-         "type" : "hg",
-         "url" : "http://hg.urth.org/hg/Exception-Class",
-         "web" : "http://hg.urth.org/hg/Exception-Class"
+         "type" : "git",
+         "url" : "git://git.urth.org/Exception-Class.git",
+         "web" : "http://git.urth.org/Exception-Class.git"
       }
    },
-   "version" : "1.32"
+   "version" : "1.33"
 }
 

@@ -1,7 +1,7 @@
 
 
 This archive contains the distribution Exception-Class,
-version 1.32:
+version 1.33:
 
   A module that allows you to declare real exception classes in Perl
 
@@ -9,6 +9,6 @@ This software is Copyright (c) 2010 by Dave Rolsky.
 
 This is free software, licensed under:
 
-  The Artistic License 2.0
+  The Artistic License 2.0 (GPL Compatible)
 
 

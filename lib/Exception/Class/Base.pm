@@ -1,6 +1,6 @@
 package Exception::Class::Base;
-BEGIN {
-  $Exception::Class::Base::VERSION = '1.32';
+{
+  $Exception::Class::Base::VERSION = '1.33';
 }
 
 use strict;
@@ -30,8 +30,9 @@ BEGIN {
 }
 
 use overload
+
     # an exception is always true
-    bool => sub {1}, '""' => 'as_string', fallback => 1;
+    bool => sub { 1 }, '""' => 'as_string', fallback => 1;
 
 # Create accessor routines
 BEGIN {
@@ -223,7 +224,7 @@ Exception::Class::Base - A base class for exception objects
 
 =head1 VERSION
 
-version 1.32
+version 1.33
 
 =head1 SYNOPSIS
 
@@ -505,7 +506,7 @@ method.  This can be easily overridden.  For example:
 
 =head1 AUTHOR
 
-  Dave Rolsky <autarch@urth.org>
+Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 
@@ -513,7 +514,7 @@ This software is Copyright (c) 2010 by Dave Rolsky.
 
 This is free software, licensed under:
 
-  The Artistic License 2.0
+  The Artistic License 2.0 (GPL Compatible)
 
 =cut
 

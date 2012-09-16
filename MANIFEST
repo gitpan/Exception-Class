@@ -6,7 +6,6 @@ META.json
 META.yml
 Makefile.PL
 README
-SIGNATURE
 bench/simple
 dist.ini
 lib/Exception/Class.pm
@@ -17,8 +16,9 @@ t/context.t
 t/ecb-standalone.t
 t/ignore.t
 t/release-eol.t
-t/release-kwalitee.t
 t/release-no-tabs.t
 t/release-pod-coverage.t
+t/release-pod-linkcheck.t
+t/release-pod-no404s.t
 t/release-pod-spell.t
-t/release-pod.t
+t/release-pod-syntax.t
