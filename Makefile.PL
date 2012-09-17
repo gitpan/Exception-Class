@@ -24,7 +24,7 @@ my %WriteMakefileArgs = (
   "LICENSE" => "artistic_2",
   "NAME" => "Exception::Class",
   "PREREQ_PM" => {
-    "Class::Data::Inheritable" => 0,
+    "Class::Data::Inheritable" => "0.02",
     "Devel::StackTrace" => "1.20",
     "Scalar::Util" => 0,
     "base" => 0,
@@ -32,7 +32,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "1.34",
+  "VERSION" => "1.35",
   "test" => {
     "TESTS" => "t/*.t"
   }

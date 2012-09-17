@@ -1,12 +1,12 @@
 package Exception::Class::Base;
 {
-  $Exception::Class::Base::VERSION = '1.34';
+  $Exception::Class::Base::VERSION = '1.35';
 }
 
 use strict;
 use warnings;
 
-use Class::Data::Inheritable;
+use Class::Data::Inheritable 0.02;
 use Devel::StackTrace 1.20;
 use Scalar::Util qw( blessed );
 
@@ -224,7 +224,7 @@ Exception::Class::Base - A base class for exception objects
 
 =head1 VERSION
 
-version 1.34
+version 1.35
 
 =head1 SYNOPSIS
 
