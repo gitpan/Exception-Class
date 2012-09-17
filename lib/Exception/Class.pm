@@ -1,6 +1,6 @@
 package Exception::Class;
 {
-  $Exception::Class::VERSION = '1.33';
+  $Exception::Class::VERSION = '1.34';
 }
 
 use 5.008001;
@@ -209,7 +209,7 @@ Exception::Class - A module that allows you to declare real exception classes in
 
 =head1 VERSION
 
-version 1.33
+version 1.34
 
 =head1 SYNOPSIS
 

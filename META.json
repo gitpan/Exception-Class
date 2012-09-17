@@ -18,6 +18,25 @@
          "requires" : {
             "ExtUtils::MakeMaker" : "6.30"
          }
+      },
+      "runtime" : {
+         "requires" : {
+            "Class::Data::Inheritable" : "0",
+            "Devel::StackTrace" : "1.20",
+            "Scalar::Util" : "0",
+            "base" : "0",
+            "overload" : "0",
+            "perl" : "5.008001",
+            "strict" : "0",
+            "warnings" : "0"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "File::Spec" : "0",
+            "Test::More" : "0.88",
+            "vars" : "0"
+         }
       }
    },
    "release_status" : "stable",
@@ -32,6 +51,6 @@
          "web" : "http://git.urth.org/Exception-Class.git"
       }
    },
-   "version" : "1.33"
+   "version" : "1.34"
 }
 

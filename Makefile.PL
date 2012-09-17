@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-
+use 5.008001;
 
 use ExtUtils::MakeMaker 6.30;
 
@@ -11,7 +11,11 @@ use ExtUtils::MakeMaker 6.30;
 my %WriteMakefileArgs = (
   "ABSTRACT" => "A module that allows you to declare real exception classes in Perl",
   "AUTHOR" => "Dave Rolsky <autarch\@urth.org>",
-  "BUILD_REQUIRES" => {},
+  "BUILD_REQUIRES" => {
+    "File::Spec" => 0,
+    "Test::More" => "0.88",
+    "vars" => 0
+  },
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
   },
@@ -19,8 +23,16 @@ my %WriteMakefileArgs = (
   "EXE_FILES" => [],
   "LICENSE" => "artistic_2",
   "NAME" => "Exception::Class",
-  "PREREQ_PM" => {},
-  "VERSION" => "1.33",
+  "PREREQ_PM" => {
+    "Class::Data::Inheritable" => 0,
+    "Devel::StackTrace" => "1.20",
+    "Scalar::Util" => 0,
+    "base" => 0,
+    "overload" => 0,
+    "strict" => 0,
+    "warnings" => 0
+  },
+  "VERSION" => "1.34",
   "test" => {
     "TESTS" => "t/*.t"
   }
