@@ -1,6 +1,6 @@
 package Exception::Class::Base;
 {
-  $Exception::Class::Base::VERSION = '1.35';
+  $Exception::Class::Base::VERSION = '1.36';
 }
 
 use strict;
@@ -214,7 +214,7 @@ sub caught {
 
 # ABSTRACT: A base class for exception objects
 
-
+__END__
 
 =pod
 
@@ -224,7 +224,7 @@ Exception::Class::Base - A base class for exception objects
 
 =head1 VERSION
 
-version 1.35
+version 1.36
 
 =head1 SYNOPSIS
 
@@ -517,7 +517,3 @@ This is free software, licensed under:
   The Artistic License 2.0 (GPL Compatible)
 
 =cut
-
-
-__END__
-

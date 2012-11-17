@@ -47,4 +47,5 @@ rethrow
 runtime
 stacktrace
 stringifies
+subclasses
 uncatchable

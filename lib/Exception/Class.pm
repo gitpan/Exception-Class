@@ -1,6 +1,6 @@
 package Exception::Class;
 {
-  $Exception::Class::VERSION = '1.35';
+  $Exception::Class::VERSION = '1.36';
 }
 
 use 5.008001;
@@ -199,7 +199,7 @@ sub Classes { sort keys %Exception::Class::CLASSES }
 
 # ABSTRACT: A module that allows you to declare real exception classes in Perl
 
-
+__END__
 
 =pod
 
@@ -209,7 +209,7 @@ Exception::Class - A module that allows you to declare real exception classes in
 
 =head1 VERSION
 
-version 1.35
+version 1.36
 
 =head1 SYNOPSIS
 
@@ -506,7 +506,3 @@ This is free software, licensed under:
   The Artistic License 2.0 (GPL Compatible)
 
 =cut
-
-
-__END__
-
