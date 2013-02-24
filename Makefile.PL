@@ -21,7 +21,7 @@ my %WriteMakefileArgs = (
   },
   "DISTNAME" => "Exception-Class",
   "EXE_FILES" => [],
-  "LICENSE" => "artistic_2",
+  "LICENSE" => "perl",
   "NAME" => "Exception::Class",
   "PREREQ_PM" => {
     "Class::Data::Inheritable" => "0.02",
@@ -32,7 +32,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "1.36",
+  "VERSION" => "1.37",
   "test" => {
     "TESTS" => "t/*.t"
   }
