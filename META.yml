@@ -3,13 +3,15 @@ abstract: 'A module that allows you to declare real exception classes in Perl'
 author:
   - 'Dave Rolsky <autarch@urth.org>'
 build_requires:
+  File::Find: 0
   File::Spec: 0
+  File::Temp: 0
   Test::More: 0.88
   vars: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300030, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 5.015, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -25,6 +27,13 @@ requires:
   strict: 0
   warnings: 0
 resources:
-  bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=Exception-Class
-  repository: git://git.urth.org/Exception-Class.git
-version: 1.37
+  bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Test-Bits
+  homepage: http://metacpan.org/release/Test-Bits
+  repository: git://git.urth.org/Test-Bits.git
+version: 1.38
+x_authority: cpan:DROLSKY
+x_contributors:
+  - 'Ricardo Signes <rjbs@cpan.org>'
+  - 'autarch <devnull@localhost>'
+  - 'convert-repo <devnull@localhost>'
+  - 'unknown <devnull@localhost>'

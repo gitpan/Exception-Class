@@ -1,3 +1,13 @@
+1.38    2014-05-05
+
+- An exception without a message will now default to either the associated
+  exception class description or the string "[Generic exception]". Patch by
+  Ricardo Signes. PR #2.
+
+- Added field_hash() and context_hash() methods. Patch by Ricardo Signes. PR
+  #1.
+
+
 1.37    2013-02-24
 
 - I now recommend you use Throwable instead of this module. It has a nicer,
@@ -365,7 +375,7 @@
   Error.pm) and Mark Stosberg.
   
 
-0.85
+0.85    Unknown Release Date
 
 - added ability to use message instead of error as hash key to
   constructor.

@@ -1,8 +1,5 @@
 package Exception::Class;
-{
-  $Exception::Class::VERSION = '1.37';
-}
-
+$Exception::Class::VERSION = '1.38';
 use 5.008001;
 
 use strict;
@@ -209,7 +206,7 @@ Exception::Class - A module that allows you to declare real exception classes in
 
 =head1 VERSION
 
-version 1.37
+version 1.38
 
 =head1 SYNOPSIS
 
@@ -292,6 +289,9 @@ information on how to get this syntax.
 You will also want to look at the documentation for
 L<Exception::Class::Base>, which is the default base class for all
 exception objects created by this module.
+
+=for Pod::Coverage     Classes
+    caught
 
 =head1 DECLARING EXCEPTION CLASSES
 
@@ -537,7 +537,7 @@ Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Dave Rolsky.
+This software is copyright (c) 2014 by Dave Rolsky.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

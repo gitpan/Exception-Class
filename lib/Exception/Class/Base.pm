@@ -1,8 +1,5 @@
 package Exception::Class::Base;
-{
-  $Exception::Class::Base::VERSION = '1.37';
-}
-
+$Exception::Class::Base::VERSION = '1.38';
 use strict;
 use warnings;
 
@@ -65,8 +62,6 @@ BEGIN {
         *{$f} = $sub;
     }
 }
-
-1;
 
 sub Classes { Exception::Class::Classes() }
 
@@ -152,6 +147,31 @@ sub _initialize {
     }
 }
 
+sub context_hash {
+    my $self = shift;
+
+    return {
+        time => $self->{time},
+        pid  => $self->{pid},
+        uid  => $self->{uid},
+        euid => $self->{euid},
+        gid  => $self->{gid},
+        egid => $self->{egid},
+    };
+}
+
+sub field_hash {
+    my $self = shift;
+
+    my $hash = {};
+
+    for my $field ( $self->Fields ) {
+        $hash->{$field} = $self->$field;
+    }
+
+    return $hash;
+}
+
 sub description {
     return 'Generic exception';
 }
@@ -172,6 +192,12 @@ sub as_string {
     my $self = shift;
 
     my $str = $self->full_message;
+    unless ( defined $str && length $str ) {
+        my $desc = $self->description;
+        $str = defined $desc
+            && length $desc ? "[$desc]" : "[Generic exception]";
+    }
+
     $str .= "\n\n" . $self->trace->as_string
         if $self->show_trace;
 
@@ -224,7 +250,7 @@ Exception::Class::Base - A base class for exception objects
 
 =head1 VERSION
 
-version 1.37
+version 1.38
 
 =head1 SYNOPSIS
 
@@ -239,6 +265,9 @@ version 1.37
 This class is the base class for all exceptions created by
 L<Exception::Class>. It provides a number of methods for getting
 information about the exception.
+
+=for Pod::Coverage     Classes
+    caught
 
 =head1 METHODS
 
@@ -323,7 +352,7 @@ control.
 =head2 MyException->Fields
 
 This method returns the extra fields defined for the given class, as
-an array.
+a list.
 
 Do not call this on the C<Exception::Class::Base> class directly or
 you'll change it for all exception classes that use
@@ -424,6 +453,32 @@ Returns the file within which the exception was thrown.
 
 Returns the line where the exception was thrown.
 
+=head2 $exception->context_hash()
+
+Returns a hash reference with the following keys:
+
+=over 4
+
+=item * time
+
+=item * pid
+
+=item * uid
+
+=item * euid
+
+=item * gid
+
+=item * egid
+
+=back
+
+=head2 $exception->field_hash()
+
+Returns a hash reference where the keys are any fields defined for the
+exception class and the values are the values associated with the field in the
+given object.
+
 =head2 $exception->trace()
 
 Returns the trace object associated with the object.
@@ -510,7 +565,7 @@ Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Dave Rolsky.
+This software is copyright (c) 2014 by Dave Rolsky.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
